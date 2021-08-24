@@ -1,0 +1,12 @@
+name: Check updated_at for repo and issues
+on:
+  workflow_dispatch:
+    inputs:
+    
+jobs:
+  security_audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          printenv
