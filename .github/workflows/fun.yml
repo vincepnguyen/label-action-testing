@@ -12,3 +12,18 @@ jobs:
       - run: |
           echo UPDATED_AT: ${{ github.event.issue.updated_at }}
           echo CREATED_AT: ${{ github.event.issue.created_at }}
+      - name: List all issue updated_at/created_at times
+        uses: actions/github-script@0.4.0
+        with:
+          script: |
+            let response = await github.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            let data = response['data'];
+          
+            data.forEach(function(issue){
+              var id = issue['number'];
+              console.log('issue id: ' + id)
+            });
+    
