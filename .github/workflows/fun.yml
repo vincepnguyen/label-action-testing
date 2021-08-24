@@ -24,7 +24,8 @@ jobs:
             let data = response['data'];
           
             data.forEach(function(issue){
-              var id = issue['number'];
-              console.log('issue id: ' + id)
+              console.log('issue [' + issue['number'] + ']')
+              console.log('    created_at: [' + issue['created_at'] + ']')
+              console.log('    updated_at: [' + issue['updated_at'] + ']')
             });
     
