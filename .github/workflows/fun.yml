@@ -15,6 +15,7 @@ jobs:
       - name: List all issue updated_at/created_at times
         uses: actions/github-script@0.4.0
         with:
+          github-token: ${{github.token}}
           script: |
             let response = await github.issues.listForRepo({
               owner: context.repo.owner,
