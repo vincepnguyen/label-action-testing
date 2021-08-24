@@ -2,11 +2,13 @@ name: Check updated_at for repo and issues
 on:
   workflow_dispatch:
     inputs:
-    
+  issues:
+    types: ['labeled','unlabeled']    
 jobs:
-  security_audit:
+  check-updated-at:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - run: |
-          printenv
+          echo UPDATED_AT: ${{ github.event.issue.updated_at }}
+          echo CREATED_AT: ${{ github.event.issue.created_at }}
