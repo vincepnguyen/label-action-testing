@@ -9,7 +9,6 @@ on:
 jobs:
   dump-stuff:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-invalid') && github.event == 'issue_comment'
     steps:
     - run: printenv
     - run: echo {{ github.event }}
