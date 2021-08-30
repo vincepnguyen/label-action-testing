@@ -5,6 +5,7 @@ on:
     types: [created]
 #  pr_comment:
 #    types: [created, edited]
+#            issue_number: context.payload.pull_request.number,
 
 jobs:
   add-labels-pr:
@@ -19,7 +20,7 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
           github.issues.addLabels({
-            issue_number: context.payload.pull_request.number,
+            issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
             labels: ['invalid']
