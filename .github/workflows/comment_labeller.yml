@@ -85,7 +85,7 @@ jobs:
 
   add-labels-pr-build:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'pull_request_review_comment'
+    if: contains(github.event.comment.body, '/add-build-dependency-containers2') && github.event_name == 'pull_request_review_comment'
     steps:
     - uses: actions/checkout@v2
     - name: Add label
