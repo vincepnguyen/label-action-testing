@@ -5,8 +5,6 @@ on:
     branches: [ main ]
   issue_comment:
     types: [created]
-  pull_request_review_comment:
-    types: [created]
   pull_request:
     branches: [ main ]
     types: [assigned, opened, synchronize, reopened, labeled, unlabeled]
@@ -37,7 +35,7 @@ jobs:
 
   add-build-label-to-pr:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'pull_request_review_comment'
+    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'issue_comment'
     steps:
     - uses: actions/checkout@v2
     - name: Add label
@@ -59,26 +57,3 @@ jobs:
             body: '👋 Added build-dependency-containers label :)!'
           })
 
-  add-labels-pr:
-    runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'pull_request_review_comment'
-    steps:
-    - uses: actions/checkout@v2
-    - name: Add label
-      uses: actions/github-script@0.9.0
-      if: success()
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
-          github.issues.addLabels({
-            issue_number: context.payload.pull_request.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            labels: ['invalid']
-          })
-          github.issues.createComment({
-            issue_number: context.payload.pull_request.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '👋 Added invalid :)!'
-          })
