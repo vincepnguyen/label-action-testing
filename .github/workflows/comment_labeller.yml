@@ -26,7 +26,7 @@ jobs:
       if: success()
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
+        script: |  
           github.issues.addLabels({
             issue_number: context.issue.number,
             owner: context.repo.owner,
