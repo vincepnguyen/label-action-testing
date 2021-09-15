@@ -16,23 +16,6 @@ jobs:
     - run: printenv
     - run: echo {{ github.event }}
 
-  add-label-missing-comment:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Add comment about missing build-dependency-containers label
-      uses: actions/github-script@v4
-      if: success()
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
-          github.issues.createComment({
-            issue_number: context.payload.pull_request.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Hi there, this change should run a build dependency containers, but running it will take hours. Do you want to run it? If so, please add flag build-dependency-containers by commenting "/add-build-dependency-containers".'
-          })
-
   add-build-label-to-pr:
     runs-on: ubuntu-latest
     if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'issue_comment'
@@ -59,7 +42,7 @@ jobs:
 
   add-labels-pr:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'pull_request_review_comment'
+    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'issue_comment'
     steps:
     - uses: actions/checkout@v2
     - name: Add label
@@ -79,4 +62,21 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             body: '👋 Added invalid :)!'
+          })
+
+  add-label-missing-comment:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Add comment about missing build-dependency-containers label
+      uses: actions/github-script@v4
+      if: success()
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.issues.createComment({
+            issue_number: context.payload.pull_request.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Hi there, this change should run a build dependency containers, but running it will take hours. Do you want to run it? If so, please add flag build-dependency-containers by commenting "/add-build-dependency-containers".'
           })
