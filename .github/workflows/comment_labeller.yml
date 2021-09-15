@@ -30,8 +30,7 @@ jobs:
             issue_number: context.payload.pull_request.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'Hi there, this apparently should run but running it will take hours. |
-            Do you want to run it? If so, please add flag build deps cont by commenting /add-build-dependency-containers.'
+            body: 'Hi there, this apparently should run but running it will take hours. Do you want to run it? If so, please add flag build deps cont by commenting /add-build-dependency-containers.'
           })
 
   add-labels-issue:
