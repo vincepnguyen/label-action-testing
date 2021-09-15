@@ -16,12 +16,12 @@ jobs:
     - run: printenv
     - run: echo {{ github.event }}
 
-  add-labels-issue:
+  add-build-label-to-pr:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-invalid') && github.event_name == 'issue_comment'
+    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/add-build-dependency-containers')
     steps:
     - uses: actions/checkout@v2
-    - name: Add label
+    - name: Add build-dependency-containers label
       uses: actions/github-script@0.9.0
       if: success()
       with:
@@ -37,39 +37,16 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: '👋 Added invalid :)!'
-          })
-
-  add-labels-pr:
-    runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/add-build-dependency-containers') && github.event_name == 'issue_comment'
-    steps:
-    - uses: actions/checkout@v2
-    - name: Add label
-      uses: actions/github-script@0.9.0
-      if: success()
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
-          github.issues.addLabels({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            labels: ['invalid']
-          })
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '👋 Added invalid :)!'
+            body: '👋 Added build-dependency-containers label :)!'
           })
 
   add-label-missing-comment:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'build-dependency-containers') == false
     steps:
     - uses: actions/checkout@v2
     - name: Add comment about missing build-dependency-containers label
-      uses: actions/github-script@v4
+      uses: actions/github-script@0.9.0
       if: success()
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
