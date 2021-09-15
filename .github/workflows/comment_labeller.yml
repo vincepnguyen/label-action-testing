@@ -8,6 +8,8 @@ on:
   pull_request:
     branches: [ main ]
     types: [assigned, opened, synchronize, reopened, labeled, unlabeled]
+  pull_request_review_comment:
+    types: [created]
 
 jobs:
   dump-stuff:
