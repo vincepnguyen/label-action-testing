@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Add label
+    - name: Add comment about missing build-dependency-containers label
       uses: actions/github-script@0.9.0
       if: success()
       with:
@@ -30,7 +30,7 @@ jobs:
             issue_number: context.payload.pull_request.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: '------ invalid :)!'
+            body: 'hey'
           })
 
   add-labels-issue:
