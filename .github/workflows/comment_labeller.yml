@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Add comment about missing build-dependency-containers label
-      uses: actions/github-script@0.9.0
+    - name: Add comment about missing build-dependency-containers label 222
+      uses: actions/github-script@v4
       if: success()
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
@@ -30,7 +30,7 @@ jobs:
             issue_number: context.payload.pull_request.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'hey'
+            body: 'hey this apparently should run but running it will take hours. Do you want to run it? If so, add flag build deps cont. (also tags Akri Maintainers)'
           })
 
   add-labels-issue:
